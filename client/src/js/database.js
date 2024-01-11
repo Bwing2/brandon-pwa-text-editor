@@ -14,21 +14,32 @@ const initdb = async () =>
 
 // TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => {
-  console.log('Post added to database.');
+  console.log('PUT to database');
   // Creates database connection and version 1.
   const jateDb = await openDB('jate', 1);
   // Creates transaction on jate object in database. Readwrite parameter means that transaction can read and write data to object store.
   const tx = jateDb.transaction('jate', 'readwrite');
-  // Gets reference and opens object store inside transaction.
+  // Retrieves reference and opens object store inside transaction.
   const store = tx.objectStore('jate');
   // Request is made using .put() method to put object into object store. Has an id of 1 and content is what was passed in as param.
-  const request = store.put({ id: 1, content: content });
+  const request = store.put({ id: 1, value: content });
   // Waits for request promise to be completed.
   const result = await request;
   console.log('Data saved to database', result);
 };
 
 // TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+export const getDb = async () => {
+  console.log('GET from database');
+  const jateDb = await openDB('jate', 1);
+  const tx = jateDb.transaction('jate', 'readonly');
+  const store = tx.objectStore('jate');
+  // Retrieves record from store with a key id of 1.
+  const request = store.get(1);
+  const result = await request;
+  console.log('Data from database', result);
+  // Allows data retrieved from getDb() function to be used in other places.
+  return result;
+};
 
 initdb();
