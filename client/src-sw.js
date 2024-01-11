@@ -27,4 +27,19 @@ warmStrategyCache({
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // TODO: Implement asset caching
-registerRoute();
+
+// registerRoute is part of Workbox library, registers route that service worker will manage.
+registerRoute(
+  // Checks if destination of request is style, script, or worker to handle request.
+  ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
+  // Instance with cacheName of 'asset-cache'.
+  new StaleWhileRevalidate({
+    cacheName: 'asset-cache',
+    plugins: [
+      // Plugin is used to see which responses are allowed to be cached, here it is status codes 0 and 200.
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
