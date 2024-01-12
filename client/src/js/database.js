@@ -34,12 +34,12 @@ export const getDb = async () => {
   const jateDb = await openDB('jate', 1);
   const tx = jateDb.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
-  // Retrieves record from store with a key id of 1.
-  const request = store.get(1);
+  // Retrieves all records from store.
+  const request = store.getAll();
   const result = await request;
   console.log('Data from database', result);
-  // Allows data retrieved from getDb() function to be used in other places.
-  return result;
+  // If result is truthy, return result.value, otherwise return undefined.
+  return result ? result.value : undefined;
 };
 
 initdb();
