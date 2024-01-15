@@ -1,6 +1,6 @@
 # brandon-pwa-text-editor
 
-[Live Deploy Link]()
+[Live Deploy Link](https://brandon-pwa-text-editor-85b339d21eb1.herokuapp.com/)
 
 ![Github License](https://img.shields.io/badge/License-MIT-green.svg)
 
